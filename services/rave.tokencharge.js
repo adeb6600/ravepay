@@ -4,6 +4,7 @@ var q = require('q');
 var spec =  morx.spec()
 				.build('currency', 'required:false, eg:NGN')
 				.build('country', 'required:false, eg:NG')
+				.build('seckey', 'required:true, eg:FLWSECK-4f215bded21389132232dc78fdfb207e-X')
 				.build('token', 'required:true, {“user_token”:“f0209”,“embed_token”:“flw-t0-9f3aa69a806f6440fbb78cc9e8b2f135-k3n”}')
 				.build('amount', 'required:true, eg:10') 
 				.build('email', 'required:true, eg:debowalefaulkner@gmail.com')
@@ -42,13 +43,13 @@ function service(data, _rave){
 			
 			
 		}
-		//console.log(params);
+		console.log(params);
 		var encrypted = _rave.encrypt(params);
 		var payload = {};
 		payload.PBFPubKey = _rave.getPublicKey();
 		payload.client = encrypted;
 		payload.alg = '3DES-24';
-		//console.log(payload);
+		console.log(payload);
 		return _rave.request('flwv3-pug/getpaidx/api/tokenized/charge', payload)
 	})
 	.then( response => {
